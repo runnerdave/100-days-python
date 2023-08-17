@@ -64,10 +64,14 @@ rules = {
 
 def play_paper_scissors_rock():
     while 1==1:
-        user_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n"))
+        try:
+            user_choice = int(input("What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.\n"))
+        except ValueError:
+            print('Wrong choice, try again with a number!')
+            continue
         if user_choice < 0 or user_choice > 2:
-            print('Wrong choice')
-            return
+            print('Wrong choice, try again with a number from: 0,1,2')
+            continue
         print(f'You chose:\n{choices[user_choice]}')
         computer_choice = random.randint(0, 2)
         print(f'Computer chose:\n{choices[computer_choice]}')
