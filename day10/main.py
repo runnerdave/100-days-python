@@ -13,19 +13,23 @@ from art import logo
 # Pick an operation: /
 # What's the next number?: 2
 # 56.0 / 2.0 = 28.0
-# Type 'y' to continue calculating with 28.0, or type 'n' to start a new calculation: 
+# Type 'y' to continue calculating with 28.0, or type 'n' to start a new calculation:
 
 def sum(a, b):
     return a + b
 
+
 def minus(a, b):
-    return a-b
+    return a - b
+
 
 def multiply(a, b):
-    return a*b
+    return a * b
+
 
 def divide(a, b):
-    return a/b
+    return a / b
+
 
 operations = {
     '+': sum,
@@ -38,9 +42,9 @@ def calculate():
     keep_going = 'y'
     result = None
     while keep_going == 'y':
-        try: 
-            if result is not None:                
-                a = result  
+        try:
+            if result is not None:
+                a = result
             else:
                 a = int(input("What's the first number?: "))
             op = input("+\n-\n*\n/\nPick an operation: ")
@@ -53,9 +57,44 @@ def calculate():
             print('Enter a valid operations, start again')
             continue
         print(f"{a} {op} {b} = {result}")
-        keep_going = input(f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation:\n")
+        keep_going = input(
+            f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation:\n")
+        
+# improved code by AI
+
+def calculate_ai():
+    while True:
+        try:
+            if 'result' in locals():
+                a = result
+            else:
+                a = int(input("What's the first number?: "))
+            
+            op = input("+\n-\n*\n/\nPick an operation: ")
+            
+            b = int(input("What's the next number?: "))
+            
+            if op not in operations:
+                raise KeyError
+            
+            result = operations[op](a, b)
+            
+            print(f"{a} {op} {b} = {result}")
+            
+            keep_going = input(f"Type 'y' to continue calculating with {result}, or type 'n' to start a new calculation: ")
+            
+            if keep_going.lower() != 'y':
+                break
+        
+        except ValueError:
+            print('Enter only numbers, start again')
+        
+        except KeyError:
+            print('Enter a valid operation, start again')
+
+# end of improved code by AI
 
 
 if __name__ == '__main__':
     print(logo)
-    calculate()
+    calculate_ai()
