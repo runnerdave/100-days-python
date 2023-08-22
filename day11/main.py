@@ -17,6 +17,7 @@ import os
 os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
 
 deck = Deck()
+deck.shuffle()
 
 messages = {
     "you_win": "You win 😃",
@@ -66,7 +67,7 @@ def computer_draws(computer_cards):
 
 def play():
     while True:
-        finish_game = True
+        finish_early = False
         keep_playing = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
         if keep_playing != 'y':
             break
@@ -80,15 +81,15 @@ def play():
                 show_hands(user_cards, computer_cards)
                 if sum_hand(computer_cards) > 21:
                     print(messages["comp_over"])  
-                    finish_game = False                  
+                    finish_early = True                  
                 break
             user_cards.append(deck.draw_card())
             show_hands(user_cards, computer_cards)
             if sum_hand(user_cards) > 21:
                 print(messages["you_over"])
-                finish_game = False 
+                finish_early = True 
                 break
-        if finish_game:
+        if not finish_early:
             determine_winner(user_cards, computer_cards)        
 
 if __name__ == '__main__':
