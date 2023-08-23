@@ -12,10 +12,6 @@
 from art import logo
 from cards import Deck
 
-import os
-
-os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
-
 deck = Deck()
 deck.shuffle()
 
