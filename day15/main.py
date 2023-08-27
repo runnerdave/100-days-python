@@ -12,6 +12,14 @@ class CoinCollection:
 
     def get_collection(self):
         return self.collection
+    
+    def count_money(self):
+        total_value = 0
+        for details in self.collection.values():
+            value = details['value']
+            quantity = details['qty']
+            total_value += value * quantity
+        return total_value
 
 class CoffeeMachine:
     def __init__(self):
@@ -24,15 +32,7 @@ class CoffeeMachine:
             'ShortBlack': {'price': 2.00, 'water': 100, 'milk': 0, 'coffee': 40},
         }
         self.coins = CoinCollection()
-        self.__build()
-
-    def __count_money(self, coins):
-        total_value = 0
-        for _, details in coins.get_collection().items():
-            value = details['value']
-            quantity = details['qty']
-            total_value += value * quantity
-        return total_value
+        self.__build()    
     
     def print_coffee_options(self):
         print("These are the coffee options:")
@@ -56,11 +56,19 @@ class CoffeeMachine:
             return True
         return False
 
-    # def insert_coins(self):
-    #     keep_inserting = True
-    #     user_coins = purse
-    #     while keep_inserting:
+    def insert_coins(self):
+        user_coins = CoinCollection()
+        for coin, values in user_coins.get_collection().items():
+            qty = input(f"Enter number of {coin}s(0 if none): ")
+            values['qty'] = int(qty)
+        return user_coins
+            
+    def add_money_from_coffee(self, money):
+        for coin, values in self.coins.get_collection().items():
+            values['qty'] += money.get_collection()[coin]['qty']
 
+    def return_change(price, money):
+        return
             
 
     def serve_order(self):
@@ -71,8 +79,18 @@ class CoffeeMachine:
         match choice:
             case "1":
                 if self.check_resources('Latte'):
-                    insert_coins()
-
+                    money_inserted = self.insert_coins()
+                    price = self.coffee_types['Latte']['price']
+                    if money_inserted.count_money() < price:
+                        print("​Sorry that's not enough money. Money refunded.​")
+                    elif money_inserted.count_money() == price:
+                        self.add_money_from_coffee(money_inserted)
+                        print("Here is your Latte. Enjoy!")
+                    else:
+                        self.add_money_from_coffee(money_inserted)
+                        print("Here is your Latte. Enjoy!")
+                        self.return_change(price, money_inserted)
+                        print(self)
             case "2":
                 self.check_resources('StrongLatte')
             case "3":
@@ -94,7 +112,7 @@ class CoffeeMachine:
         self.coins.get_collection()['penny']['qty'] = 10
 
     def __repr__(self):
-        return f"Water: {self.water}ml \nMilk: {self.milk}ml \nCoffee: {self.coffee}g\nMoney: ${self.__count_money(self.coins)}"
+        return f"Water: {self.water}ml \nMilk: {self.milk}ml \nCoffee: {self.coffee}g\nMoney: ${self.coins.count_money()}"
 
 
 if __name__ == '__main__':
