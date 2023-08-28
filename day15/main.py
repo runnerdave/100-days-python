@@ -1,6 +1,7 @@
 import sys
 from art import logo
 
+
 class CoinCollection:
     def __init__(self):
         self.collection = {
@@ -12,7 +13,7 @@ class CoinCollection:
 
     def get_collection(self):
         return self.collection
-    
+
     def count_money(self):
         total_value = 0
         for details in self.collection.values():
@@ -20,6 +21,7 @@ class CoinCollection:
             quantity = details['qty']
             total_value += value * quantity
         return total_value
+
 
 class CoffeeMachine:
     def __init__(self):
@@ -32,8 +34,8 @@ class CoffeeMachine:
             'ShortBlack': {'price': 2.00, 'water': 100, 'milk': 0, 'coffee': 40},
         }
         self.coins = CoinCollection()
-        self.__build()    
-    
+        self.__build()
+
     def print_coffee_options(self):
         print("These are the coffee options:")
         i = 1
@@ -58,18 +60,58 @@ class CoffeeMachine:
 
     def insert_coins(self):
         user_coins = CoinCollection()
+        print("")
         for coin, values in user_coins.get_collection().items():
             qty = input(f"Enter number of {coin}s(0 if none): ")
             values['qty'] = int(qty)
+        print("")
         return user_coins
-            
+
     def add_money_from_coffee(self, money):
         for coin, values in self.coins.get_collection().items():
             values['qty'] += money.get_collection()[coin]['qty']
 
-    def return_change(price, money):
-        return
-            
+    def return_change(self, price, money):
+        change = money.count_money() - price
+        change_00 = change*100
+        coins = self.coins.get_collection()
+        while change_00 > 0:
+            if change_00 % 25 == 0:
+                quarters = change_00/25
+                coins['quarter']['qty'] -= quarters
+                change_00 -= 25*quarters
+            if change_00 % 10 == 0:
+                dimes = change_00/10
+                coins['dime']['qty'] -= dimes
+                change_00 -= 10*dimes
+            if change_00 % 5 == 0:
+                nickels = change_00/5
+                coins['nickel']['qty'] -= nickels
+                change_00 -= 5*nickels
+            if change_00 > 0:
+                pennies = change_00
+                coins['penny']['qty'] -= pennies
+                change_00 = 0
+        return round(change, 2)
+    
+    def use_ingredients(self, coffee_type):
+        self.water -= self.coffee_types[coffee_type]['water']
+        self.milk -= self.coffee_types[coffee_type]['milk']
+        self.coffee -= self.coffee_types[coffee_type]['coffee']
+    
+    def make_coffee(self, coffee_type):
+        if self.check_resources(coffee_type):
+            money_inserted = self.insert_coins()
+            price = self.coffee_types[coffee_type]['price']
+            if money_inserted.count_money() < price:
+                print("​Sorry that's not enough money. Money refunded.​")            
+            else:
+                self.add_money_from_coffee(money_inserted)
+                self.use_ingredients(coffee_type)
+                print(f"Here is your {coffee_type}. Enjoy!")
+                if money_inserted.count_money() >= price:
+                    change = self.return_change(price, money_inserted)
+                    print(f"Here is ${change} dollars in change.")
 
     def serve_order(self):
         self.print_coffee_options()
@@ -78,29 +120,16 @@ class CoffeeMachine:
             sys.exit()
         match choice:
             case "1":
-                if self.check_resources('Latte'):
-                    money_inserted = self.insert_coins()
-                    price = self.coffee_types['Latte']['price']
-                    if money_inserted.count_money() < price:
-                        print("​Sorry that's not enough money. Money refunded.​")
-                    elif money_inserted.count_money() == price:
-                        self.add_money_from_coffee(money_inserted)
-                        print("Here is your Latte. Enjoy!")
-                    else:
-                        self.add_money_from_coffee(money_inserted)
-                        print("Here is your Latte. Enjoy!")
-                        self.return_change(price, money_inserted)
-                        print(self)
+                self.make_coffee('Latte')
             case "2":
-                self.check_resources('StrongLatte')
+                self.make_coffee('StrongLatte')
             case "3":
-                self.check_resources('ShortBlack')
+                self.make_coffee('ShortBlack')
             case "report":
                 print(self)
             case _:
                 print("Choice not available")
-
-
+        print("")
 
     def __build(self):
         self.water = 1000
@@ -118,5 +147,5 @@ class CoffeeMachine:
 if __name__ == '__main__':
     print(logo)
     coffeeMachine = CoffeeMachine()
-    # print(coffeeMachine)
-    coffeeMachine.serve_order()
+    while True:
+        coffeeMachine.serve_order()
