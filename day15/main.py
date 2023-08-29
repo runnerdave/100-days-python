@@ -1,6 +1,8 @@
 import sys
 from art import logo
 
+# solution from teacher: https://replit.com/@appbrewery/coffee-machine-final#main.py
+
 
 class CoinCollection:
     def __init__(self):
