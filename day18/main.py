@@ -1,3 +1,5 @@
+# solution from teacher: https://replit.com/@appbrewery/hirstpainting-final
+
 import colorgram
 import turtle as t
 
@@ -10,6 +12,7 @@ full_path = os.path.join(absolute_path, relative_path)
 
 t.colormode(255)
 tim = t.Turtle()
+tim.speed("fastest")
 
 
 def extract_colors_from_image(image, colors=30):
@@ -47,4 +50,5 @@ if __name__ == '__main__':
     colors = extract_colors_from_image('graphic.jpeg')
     set_start()
     draw_matrix(colors)
-    stop = input("stop")
+    screen = t.Screen()
+    screen.exitonclick()
