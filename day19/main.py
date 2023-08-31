@@ -23,13 +23,13 @@ class Bale:
         winner = None
         while winner == None:
             for t in self.turtles:
-                x = t.tim.pos()[0]
-                y = t.tim.pos()[1]
+                x = t.tim.xcor()
+                y = t.tim.ycor()
                 factor = random.randint(5, 10)
                 if x + factor >= finish_line:
                     winner = t
                 t.tim.goto(x + factor, y)
-        return winner.tim.color()[0]
+        return winner.tim.pencolor()
 
     def __build(self):
         self.hatch()
