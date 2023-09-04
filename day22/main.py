@@ -1,5 +1,6 @@
-from turtle import Screen, Turtle
+from turtle import Screen
 from net import Net
+from scoreboard import Scoreboard
 
 # PONG!
 # Classes:
@@ -20,9 +21,10 @@ if __name__ == '__main__':
     screen.setup(height=HEIGHT, width=WIDTH)
     screen.bgcolor("black")
     screen.title("Pong")
-    # screen.tracer(0)
+    screen.tracer(0)
 
     net = Net(HEIGHT)
-
+    scoreboard = Scoreboard(HEIGHT)
+    screen.update()
 
     screen.exitonclick()

@@ -9,6 +9,7 @@ class Net(Turtle):
 
     def __init__(self, height) -> None:
         self.height = height
+        self.net = []
         self.create_net()
 
     def create_segment(self, pos):
@@ -19,9 +20,7 @@ class Net(Turtle):
         return t
     
     def create_net(self):
-        y = self.height/2
-        for _ in range(self.height//2, -self.height//2, SPACE_LENGTH):
+        for y in range(self.height//2, -self.height//2, -(SPACE_LENGTH + 50)):
             pos = (0, y)
             t = self.create_segment(pos)
-            y += SEGMENT_LENGTH
-            self.snake.append(t)
+            self.net.append(t)
