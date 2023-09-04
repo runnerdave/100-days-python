@@ -5,6 +5,7 @@ UP = 90
 DOWN = 270
 LEFT = 180
 RIGHT = 0
+INITIAL_LENGTH = 10
 
 
 class Snake:
@@ -17,13 +18,18 @@ class Snake:
 
     def create_snake(self):
         x = 0
-        for _ in range(3):
-            t = Turtle("square")
-            t.up()
-            t.color("white")
-            t.goto(x, 0)
+        for _ in range(INITIAL_LENGTH):
+            pos = (x, 0)
+            t = self.create_segment(pos)
             x -= STEP
             self.snake.append(t)
+
+    def create_segment(self, pos):
+        t = Turtle("square")
+        t.up()
+        t.color("white")
+        t.goto(pos)
+        return t
 
     def move(self):
         snake = self.snake
@@ -34,16 +40,13 @@ class Snake:
         self.head.forward(STEP)
 
     def grow(self):
-        t = Turtle("square")
-        t.up()
-        t.color("white")
-        t.goto(self.tail.xcor()-STEP, self.tail.ycor()-STEP)
+        t = self.create_segment(self.tail.pos())
         self.snake.append(t)
         self.tail = self.snake[-1]
 
     def crash_with_self(self) -> bool:
-        for p in range(1, len(self.snake)):
-            if self.snake[p].distance(self.head) == 0:
+        for p in self.snake[1:]:
+            if p.distance(self.head) < 10:
                 return True
         return False
 
