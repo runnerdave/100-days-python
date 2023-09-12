@@ -5,7 +5,7 @@ SPACE_LENGTH = 2
 COLOR = "white"
 SHAPE = "square"
 
-class Net(Turtle):
+class Net():
 
     def __init__(self, height) -> None:
         self.height = height
