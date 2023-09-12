@@ -19,6 +19,7 @@ from scoreboard import Scoreboard
 WIDTH = 800
 HEIGHT = 600
 
+
 if __name__ == '__main__':
     screen = Screen()
     screen.setup(height=HEIGHT, width=WIDTH)
@@ -26,25 +27,33 @@ if __name__ == '__main__':
     screen.title("Pong")
     screen.tracer(0)
 
-    is_game_on = True
     net = Net(HEIGHT)
     scoreboard = Scoreboard(HEIGHT)
     paddle_right = Paddle(screen_h=HEIGHT)
     paddle_left = Paddle(pos=(-350, 0))
-    ball = Ball(True)
+    ball = Ball(right=True, height=HEIGHT, width=WIDTH)
     screen.update()
 
     screen.listen()
     screen.onkey(fun=paddle_right.up, key="Up")
     screen.onkey(fun=paddle_right.down, key="Down")
-    screen.onkey(paddle_left.up, "q")
-    screen.onkey(paddle_left.down, "a")
+    screen.onkey(fun=paddle_left.up, key="q")
+    screen.onkey(fun=paddle_left.down, key="a")
 
-    i = 0
-    while is_game_on and not i == 200:
+    end = 0
+    while end == 0:
         time.sleep(0.4)
         screen.update()
-        ball.move()
-        i += 1
+        end = ball.move()
+        # print(paddle_right.distance(ball))
+        if paddle_right.distance(ball) < 25:
+            ball.bounce()
+        print(ball.heading())
+
+    if end == 1:
+        scoreboard.score1 += 1
+    else:
+        scoreboard.score2 += 1
+    scoreboard.update_score()
 
     screen.exitonclick()
