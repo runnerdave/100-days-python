@@ -8,7 +8,7 @@ from scoreboard import Scoreboard
 # PONG!
 # Classes:
 # - Paddle
-#   - Length, move_up, move_down, 
+#   - Length, move_up, move_down,
 # - Ball
 #   - launch, bounce, move, touch wall
 # - Scoreboard
@@ -18,6 +18,22 @@ from scoreboard import Scoreboard
 
 WIDTH = 800
 HEIGHT = 600
+RIGHT_PADEL_POS = (WIDTH//2-50, 0)
+LEFT_PADEL_POS = (-WIDTH//2+50, 0)
+
+
+def detect_wall_collision(HEIGHT, ball):
+    if ball.ycor() > (HEIGHT//2 - 20) or ball.ycor() < -(HEIGHT//2 - 20):
+        ball.bounce_y()
+
+
+def detect_right_padel_collision(paddle_right, ball):
+    if paddle_right.distance(ball) < 50 and ball.xcor() > (RIGHT_PADEL_POS[0] - 10):
+        ball.bounce_x()
+
+def detect_left_padel_collision(paddle_left, ball):
+    if paddle_left.distance(ball) < 50 and ball.xcor() < (LEFT_PADEL_POS[0] + 10):
+        ball.bounce_x()
 
 
 if __name__ == '__main__':
@@ -29,8 +45,8 @@ if __name__ == '__main__':
 
     net = Net(HEIGHT)
     scoreboard = Scoreboard(HEIGHT)
-    paddle_right = Paddle(screen_h=HEIGHT)
-    paddle_left = Paddle(pos=(-350, 0))
+    paddle_right = Paddle(screen_h=HEIGHT, pos=RIGHT_PADEL_POS)
+    paddle_left = Paddle(pos=LEFT_PADEL_POS)
     ball = Ball(right=True, height=HEIGHT, width=WIDTH)
     screen.update()
 
@@ -42,13 +58,12 @@ if __name__ == '__main__':
 
     end = 0
     while end == 0:
-        time.sleep(0.4)
+        time.sleep(0.1)
         screen.update()
         end = ball.move()
-        # print(paddle_right.distance(ball))
-        if paddle_right.distance(ball) < 25:
-            ball.bounce()
-        print(ball.heading())
+        detect_right_padel_collision(paddle_right, ball)
+        detect_left_padel_collision(paddle_left, ball)
+        detect_wall_collision(HEIGHT, ball)
 
     if end == 1:
         scoreboard.score1 += 1

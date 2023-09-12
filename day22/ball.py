@@ -1,22 +1,20 @@
 from turtle import Turtle
 import math
 
-STEP = 50
+STEP = 10
 
 
 class Ball(Turtle):
     def __init__(self, width, height, right: bool = True, shape: str = "circle", visible: bool = True) -> None:
         super().__init__(shape, visible)
-        hyp = math.sqrt((width//2)**2 + (height//2)**2)
-        self.angle = math.degrees(math.asin((height//2) / hyp))
         self.limit_x = width//2
         self.limit_y = height//2
         self.penup()
         self.speed("slow")
         self.shapesize(stretch_len=0.5, stretch_wid=0.5)
-        self.setheading(self.angle) if right else self.setheading(
-            self.angle+180)
         self.color("white")
+        self.move_x = STEP if right else -STEP
+        self.move_y = STEP
         self.move()
 
     def move(self) -> int:
@@ -24,9 +22,14 @@ class Ball(Turtle):
             return 1
         if self.xcor() < -self.limit_x - STEP:
             return -1
-        self.forward(STEP)
+        new_x = self.xcor() + self.move_x
+        new_y = self.ycor() + self.move_y
+        self.goto(new_x, new_y)
         return 0
 
-    def bounce(self):
-        self.setheading(self.angle + 90)
-        self.forward(STEP)
+    def bounce_y(self):
+        self.move_y *= -1
+
+    def bounce_x(self):
+        self.move_x *= -1
+        
