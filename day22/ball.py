@@ -5,7 +5,7 @@ STEP = 10
 
 
 class Ball(Turtle):
-    def __init__(self, width, height, right: bool = True, shape: str = "circle", visible: bool = True) -> None:
+    def __init__(self, width, height, shape: str = "circle", visible: bool = True) -> None:
         super().__init__(shape, visible)
         self.limit_x = width//2
         self.limit_y = height//2
@@ -13,11 +13,12 @@ class Ball(Turtle):
         self.speed("slow")
         self.shapesize(stretch_len=0.5, stretch_wid=0.5)
         self.color("white")
-        self.move_x = STEP if right else -STEP
+        self.move_x = STEP
         self.move_y = STEP
         self.move()
 
     def move(self) -> int:
+        # Detect if pass paddle x position to score
         if self.xcor() > (self.limit_x - STEP):
             return 1
         if self.xcor() < -self.limit_x - STEP:
@@ -32,4 +33,8 @@ class Ball(Turtle):
 
     def bounce_x(self):
         self.move_x *= -1
+
+    def reset_position(self):
+        self.move_x *= -1
+        self.goto((0, 0))
         
