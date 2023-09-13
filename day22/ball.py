@@ -15,6 +15,7 @@ class Ball(Turtle):
         self.color("white")
         self.move_x = STEP
         self.move_y = STEP
+        self.move_speed = 0.1
         self.move()
 
     def move(self) -> int:
@@ -32,9 +33,11 @@ class Ball(Turtle):
         self.move_y *= -1
 
     def bounce_x(self):
+        self.move_speed *= 0.5        
         self.move_x *= -1
 
     def reset_position(self):
+        self.move_speed = 0.1
         self.move_x *= -1
         self.goto((0, 0))
         

@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     end = 0
     while end == 0:
-        time.sleep(0.1)
+        time.sleep(ball.move_speed)
         screen.update()
         end = ball.move()
         detect_right_padel_bounce(paddle_right, ball)
