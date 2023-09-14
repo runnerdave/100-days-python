@@ -1,5 +1,4 @@
 from turtle import Turtle
-import math
 
 STEP = 10
 
@@ -24,8 +23,12 @@ class Ball(Turtle):
             return 1
         if self.xcor() < -self.limit_x - STEP:
             return -1
+        
+        # Calculate new coordinates
         new_x = self.xcor() + self.move_x
         new_y = self.ycor() + self.move_y
+
+        # Move to the new coordinates
         self.goto(new_x, new_y)
         return 0
 
