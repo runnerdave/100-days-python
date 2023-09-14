@@ -15,6 +15,11 @@ from scoreboard import Scoreboard
 # 4. When the turtle collides with a car, it's game over and everything stops.
 
 
+def score(player, scoreboard):
+    if player.ycor() >= FINISH_LINE_Y:
+        scoreboard.score += 1
+        scoreboard.update_score()
+
 if __name__ == '__main__':
     screen = Screen()
     screen.setup(width=600, height=600)
@@ -23,7 +28,8 @@ if __name__ == '__main__':
 
     player = Player()
     scoreboard = Scoreboard()
-    # screen.update()
+    cars = CarManager()
+    cars.generate_traffic()
 
     screen.listen()
     screen.onkey(fun=player.up, key="Up")
@@ -31,9 +37,8 @@ if __name__ == '__main__':
     game_is_on = True
     while game_is_on:
         time.sleep(0.1)
-        if player.ycor() >= FINISH_LINE_Y:
-            scoreboard.score += 1
-            scoreboard.update_score()
+        score(player, scoreboard)
+        cars.move()
         screen.update()
 
     screen.exitonclick()
