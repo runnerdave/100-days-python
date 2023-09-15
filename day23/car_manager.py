@@ -1,7 +1,7 @@
 from turtle import Turtle
 import random
 COLORS = ["red", "orange", "yellow", "green", "blue", "purple"]
-Y_STARTING_POSITIONS = [i for i in range(-250, 250, 45)]
+Y_STARTING_POSITIONS = [i for i in range(-230, 250, 45)]
 STARTING_MOVE_DISTANCE = 5
 MOVE_INCREMENT = 10
 
@@ -10,6 +10,7 @@ class CarManager:
     def __init__(self, number_of_cars=10) -> None:
         self.cars = []
         self.number_of_cars = number_of_cars
+        self.move_speed = 0.4
 
     def generate_traffic(self):
         for _ in range(self.number_of_cars):
