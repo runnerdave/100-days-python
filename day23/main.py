@@ -20,6 +20,7 @@ def score(player: Player, scoreboard: Scoreboard, cars: CarManager):
         cars.move_speed *= 0.5
         scoreboard.score += 1
         scoreboard.update_score()
+        player.reset()
 
 def detect_crash(player: Player, cars) -> bool:
     for c in cars:
