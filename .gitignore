@@ -158,3 +158,11 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+day24/mail_merge/Output/ReadyToSend/Aang.txt
+day24/mail_merge/Output/ReadyToSend/Appa.txt
+day24/mail_merge/Output/ReadyToSend/Katara.txt
+day24/mail_merge/Output/ReadyToSend/Momo.txt
+day24/mail_merge/Output/ReadyToSend/Sokka.txt
+day24/mail_merge/Output/ReadyToSend/Toph.txt
+day24/mail_merge/Output/ReadyToSend/Uncle Iroh.txt
+day24/mail_merge/Output/ReadyToSend/Zuko.txt
