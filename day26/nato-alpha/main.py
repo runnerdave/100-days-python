@@ -26,10 +26,11 @@ if __name__ == '__main__':
 
     #TODO 1. Create a dictionary in this format:
     nato_data_frame = pandas.read_csv("nato_phonetic_alphabet.csv")
-    print({row.letter:row.code for (_, row) in nato_data_frame.iterrows()})
-    {"A": "Alfa", "B": "Bravo"}
+    nato_dict = {row.letter:row.code for (_, row) in nato_data_frame.iterrows()}
+    print(nato_dict)
+    # {"A": "Alfa", "B": "Bravo"}
 
     #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-    input = "Alberto"
-    
-
+    word = input('Enter the word to translate to NATO code:')
+    codes = [nato_dict[l.upper()] for l in word]
+    print(codes)
