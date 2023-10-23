@@ -36,10 +36,14 @@ if __name__ == '__main__':
     # {"A": "Alfa", "B": "Bravo"}
 
     #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-    word = input('Enter the word to translate to NATO code:')
-    try:
-        codes = [nato_dict[l.upper()] for l in word]
-    except KeyError as error:
-        print("Sorry, only letters in the alphabet")
-    else:
-        print(codes)
+    def generate_nato_from_input():
+        word = input('Enter the word to translate to NATO code:')
+        try:
+            codes = [nato_dict[l.upper()] for l in word]
+        except KeyError as error:
+            print("Sorry, only letters in the alphabet")
+            generate_nato_from_input()
+        else:
+            print(codes)
+
+generate_nato_from_input()
