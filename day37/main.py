@@ -7,7 +7,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 PIXELA_URL = "https://pixe.la/v1/users"
-TOKEN = "19F45C72-2F66-4A83-BE1A-6644F3E24ED0"
+TOKEN = os.environ.get("PIXELA_TOKEN")
 USERNAME = "runnerdave"
 GRAPH_ID = "graph1"
 
